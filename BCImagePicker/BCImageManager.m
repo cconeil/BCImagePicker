@@ -69,7 +69,7 @@ static NSString * const kStartKey = @"start";
             return [[BCImageResult alloc] initWithDictionary:object];
         }];
 
-        self.results = [self.results arrayByAddingObjectsFromArray:imageUrlResults];
+        self.results = imageUrlResults;
         self.state = BCImageManagerStateLoaded;
         
         if (completion) {
@@ -88,7 +88,6 @@ static NSString * const kStartKey = @"start";
 - (void)loadNextImages:(void (^)(NSArray *, NSError *))completion {
     NSAssert(self.state != BCImageManagerStateLoading, @"You can't load the next page while one is already loading");
     NSAssert(self.state != BCImageManagerStateReachedEnd, @"You've already reached the end of this search");
-
 
     self.state = BCImageManagerStateLoading;
     self.pageNumber += 1;

@@ -7,8 +7,13 @@
 //
 
 #import "BCSearchHistoryViewController.h"
+#import "BCSearchHistoryManager.h"
 
-@interface BCSearchHistoryViewController ()
+static NSString * const kHistoryCellIdentifier = @"BCHistoryCell";
+
+@interface BCSearchHistoryViewController () <UITableViewDataSource, UITableViewDelegate>
+
+@property (nonatomic, strong) UITableView *tableView;
 
 @end
 
@@ -16,22 +21,43 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+
+    self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    self.tableView.backgroundColor = [UIColor whiteColor];
+    self.tableView.tableFooterView = [[UIView alloc] init];
+
+    [self.view addSubview:self.tableView];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+#pragma mark - UITableViewDataSource
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [BCSearchHistoryManager sharedManager].searches.count;
 }
-*/
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kHistoryCellIdentifier];
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kHistoryCellIdentifier];
+    }
+
+    cell.textLabel.text = [BCSearchHistoryManager sharedManager].searches[indexPath.row];
+
+    return cell;
+}
+
+#pragma mark - UITableViewDelegate
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    NSString *query = [BCSearchHistoryManager sharedManager].searches[indexPath.row];
+    NSLog(@"selected %@", query);
+
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+}
 
 @end

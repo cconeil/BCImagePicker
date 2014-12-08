@@ -11,6 +11,7 @@
 #import "BCImageManager.h"
 #import "BCImageCollectionViewCell.h"
 #import "BCSearchHistoryManager.h"
+#import "BCSearchHistoryViewController.h"
 
 static const NSInteger kNumberOfColumns = 3;
 static NSString * const kImageCellReuseIdentifier = @"BCImageCollectionViewCellIdentifier";
@@ -27,6 +28,10 @@ static NSString * const kImageCellReuseIdentifier = @"BCImageCollectionViewCellI
 #pragma mark - View Lifecycle
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    self.title = NSLocalizedString(@"Image Picker", nil);
+    UIBarButtonItem *historyButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"History", nil) style:UIBarButtonItemStylePlain target:self action:@selector(historyButtonTapped:)];
+    self.navigationItem.rightBarButtonItem = historyButton;
 
     // TODO: Get TopLayoutGuide working here
     self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0.0, 64.0, self.view.frame.size.width, 44.0)];
@@ -52,6 +57,11 @@ static NSString * const kImageCellReuseIdentifier = @"BCImageCollectionViewCellI
     [[BCImageManager sharedManager] loadImagesWithQuery:query completion:^(NSArray *results, NSError *error) {
         [weakSelf.collectionView reloadData];
     }];
+}
+
+- (void)historyButtonTapped:(id)sender {
+    BCSearchHistoryViewController *searchHistoryViewController = [[BCSearchHistoryViewController alloc] initWithNibName:nil bundle:nil];
+    [self.navigationController pushViewController:searchHistoryViewController animated:YES];
 }
 
 - (CGFloat)columnWidth {
