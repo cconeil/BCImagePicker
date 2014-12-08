@@ -6,17 +6,24 @@
 //  Copyright (c) 2014 Chris O'Neil. All rights reserved.
 //
 
-#import "AppDelegate.h"
+#import "BCAppDelegate.h"
+#import "BCHomeViewController.h"
 
-@interface AppDelegate ()
+@interface BCAppDelegate ()
 
 @end
 
-@implementation AppDelegate
-
+@implementation BCAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    BCHomeViewController *homeViewController = [[BCHomeViewController alloc] initWithNibName:nil bundle:nil];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:homeViewController];
+
+    self.window.rootViewController = navigationController;
+    [self.window makeKeyAndVisible];
+
     return YES;
 }
 

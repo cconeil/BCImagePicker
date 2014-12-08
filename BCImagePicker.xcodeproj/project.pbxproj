@@ -8,12 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		9D746C901A358E0E009BEFCF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D746C8F1A358E0E009BEFCF /* main.m */; };
-		9D746C931A358E0E009BEFCF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D746C921A358E0E009BEFCF /* AppDelegate.m */; };
-		9D746C961A358E0E009BEFCF /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D746C951A358E0E009BEFCF /* ViewController.m */; };
-		9D746C991A358E0E009BEFCF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D746C971A358E0E009BEFCF /* Main.storyboard */; };
+		9D746C931A358E0E009BEFCF /* BCAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D746C921A358E0E009BEFCF /* BCAppDelegate.m */; };
 		9D746C9B1A358E0E009BEFCF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D746C9A1A358E0E009BEFCF /* Images.xcassets */; };
-		9D746C9E1A358E0E009BEFCF /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D746C9C1A358E0E009BEFCF /* LaunchScreen.xib */; };
 		9D746CAA1A358E0E009BEFCF /* BCImagePickerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D746CA91A358E0E009BEFCF /* BCImagePickerTests.m */; };
+		9D746CB51A3590A8009BEFCF /* BCHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D746CB41A3590A8009BEFCF /* BCHomeViewController.m */; };
+		9D746CC31A3595FE009BEFCF /* MosaicLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D746CBA1A3595FE009BEFCF /* MosaicLayout.m */; };
+		9D746CC41A3595FE009BEFCF /* MosaicData.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D746CBD1A3595FE009BEFCF /* MosaicData.m */; };
+		9D746CC51A3595FE009BEFCF /* MosaicCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D746CC21A3595FE009BEFCF /* MosaicCell.m */; };
+		9D746CC81A359879009BEFCF /* BCImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D746CC71A359879009BEFCF /* BCImageManager.m */; };
+		9D746CCC1A35A79C009BEFCF /* BCImageResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D746CCB1A35A79C009BEFCF /* BCImageResult.m */; };
+		9D746CD01A35A88D009BEFCF /* NSArray+BCAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D746CCF1A35A88D009BEFCF /* NSArray+BCAdditions.m */; };
+		9D746CD41A35B097009BEFCF /* BCImageCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D746CD31A35B097009BEFCF /* BCImageCollectionViewCell.m */; };
+		F9FCDDA04CC42293F3FF85AF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A010A520848B1FFE53E24BB /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,19 +33,35 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1A010A520848B1FFE53E24BB /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		21CCCE696548561CAFB1ECBE /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		9D746C8A1A358E0E009BEFCF /* BCImagePicker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BCImagePicker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D746C8E1A358E0E009BEFCF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9D746C8F1A358E0E009BEFCF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		9D746C911A358E0E009BEFCF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		9D746C921A358E0E009BEFCF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		9D746C941A358E0E009BEFCF /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		9D746C951A358E0E009BEFCF /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		9D746C981A358E0E009BEFCF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		9D746C911A358E0E009BEFCF /* BCAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BCAppDelegate.h; sourceTree = "<group>"; };
+		9D746C921A358E0E009BEFCF /* BCAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BCAppDelegate.m; sourceTree = "<group>"; };
 		9D746C9A1A358E0E009BEFCF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		9D746C9D1A358E0E009BEFCF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		9D746CA31A358E0E009BEFCF /* BCImagePickerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BCImagePickerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D746CA81A358E0E009BEFCF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9D746CA91A358E0E009BEFCF /* BCImagePickerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BCImagePickerTests.m; sourceTree = "<group>"; };
+		9D746CB31A3590A8009BEFCF /* BCHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCHomeViewController.h; sourceTree = "<group>"; };
+		9D746CB41A3590A8009BEFCF /* BCHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCHomeViewController.m; sourceTree = "<group>"; };
+		9D746CB91A3595FE009BEFCF /* MosaicLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MosaicLayout.h; sourceTree = "<group>"; };
+		9D746CBA1A3595FE009BEFCF /* MosaicLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MosaicLayout.m; sourceTree = "<group>"; };
+		9D746CBC1A3595FE009BEFCF /* MosaicData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MosaicData.h; sourceTree = "<group>"; };
+		9D746CBD1A3595FE009BEFCF /* MosaicData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MosaicData.m; sourceTree = "<group>"; };
+		9D746CBF1A3595FE009BEFCF /* MosaicLayoutDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MosaicLayoutDelegate.h; sourceTree = "<group>"; };
+		9D746CC11A3595FE009BEFCF /* MosaicCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MosaicCell.h; sourceTree = "<group>"; };
+		9D746CC21A3595FE009BEFCF /* MosaicCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MosaicCell.m; sourceTree = "<group>"; };
+		9D746CC61A359879009BEFCF /* BCImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCImageManager.h; sourceTree = "<group>"; };
+		9D746CC71A359879009BEFCF /* BCImageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCImageManager.m; sourceTree = "<group>"; };
+		9D746CCA1A35A79C009BEFCF /* BCImageResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCImageResult.h; sourceTree = "<group>"; };
+		9D746CCB1A35A79C009BEFCF /* BCImageResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCImageResult.m; sourceTree = "<group>"; };
+		9D746CCE1A35A88D009BEFCF /* NSArray+BCAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+BCAdditions.h"; sourceTree = "<group>"; };
+		9D746CCF1A35A88D009BEFCF /* NSArray+BCAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+BCAdditions.m"; sourceTree = "<group>"; };
+		9D746CD21A35B097009BEFCF /* BCImageCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCImageCollectionViewCell.h; sourceTree = "<group>"; };
+		9D746CD31A35B097009BEFCF /* BCImageCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCImageCollectionViewCell.m; sourceTree = "<group>"; };
+		9E87277515B9CF50B16BD851 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F9FCDDA04CC42293F3FF85AF /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -60,12 +83,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		72DBC21D5BF9703A3B1F9715 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				9E87277515B9CF50B16BD851 /* Pods.debug.xcconfig */,
+				21CCCE696548561CAFB1ECBE /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		92190693327B1736FD8491E1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1A010A520848B1FFE53E24BB /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		9D746C811A358E0D009BEFCF = {
 			isa = PBXGroup;
 			children = (
 				9D746C8C1A358E0E009BEFCF /* BCImagePicker */,
 				9D746CA61A358E0E009BEFCF /* BCImagePickerTests */,
 				9D746C8B1A358E0E009BEFCF /* Products */,
+				72DBC21D5BF9703A3B1F9715 /* Pods */,
+				92190693327B1736FD8491E1 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -81,13 +123,16 @@
 		9D746C8C1A358E0E009BEFCF /* BCImagePicker */ = {
 			isa = PBXGroup;
 			children = (
-				9D746C911A358E0E009BEFCF /* AppDelegate.h */,
-				9D746C921A358E0E009BEFCF /* AppDelegate.m */,
-				9D746C941A358E0E009BEFCF /* ViewController.h */,
-				9D746C951A358E0E009BEFCF /* ViewController.m */,
-				9D746C971A358E0E009BEFCF /* Main.storyboard */,
+				9D746CD21A35B097009BEFCF /* BCImageCollectionViewCell.h */,
+				9D746CD31A35B097009BEFCF /* BCImageCollectionViewCell.m */,
+				9D746CD11A35A89A009BEFCF /* Categories */,
+				9D746CCD1A35A7A2009BEFCF /* Models */,
+				9D746C911A358E0E009BEFCF /* BCAppDelegate.h */,
+				9D746C921A358E0E009BEFCF /* BCAppDelegate.m */,
+				9D746CC91A35987F009BEFCF /* Managers */,
+				9D746CB61A35913E009BEFCF /* View Controllers */,
+				9D746CB71A3595FE009BEFCF /* MosaicLayout */,
 				9D746C9A1A358E0E009BEFCF /* Images.xcassets */,
-				9D746C9C1A358E0E009BEFCF /* LaunchScreen.xib */,
 				9D746C8D1A358E0E009BEFCF /* Supporting Files */,
 			);
 			path = BCImagePicker;
@@ -119,6 +164,88 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		9D746CB61A35913E009BEFCF /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				9D746CB31A3590A8009BEFCF /* BCHomeViewController.h */,
+				9D746CB41A3590A8009BEFCF /* BCHomeViewController.m */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		9D746CB71A3595FE009BEFCF /* MosaicLayout */ = {
+			isa = PBXGroup;
+			children = (
+				9D746CB81A3595FE009BEFCF /* Controllers */,
+				9D746CBB1A3595FE009BEFCF /* Entities */,
+				9D746CBE1A3595FE009BEFCF /* Protocols */,
+				9D746CC01A3595FE009BEFCF /* Views */,
+			);
+			path = MosaicLayout;
+			sourceTree = "<group>";
+		};
+		9D746CB81A3595FE009BEFCF /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				9D746CB91A3595FE009BEFCF /* MosaicLayout.h */,
+				9D746CBA1A3595FE009BEFCF /* MosaicLayout.m */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		9D746CBB1A3595FE009BEFCF /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				9D746CBC1A3595FE009BEFCF /* MosaicData.h */,
+				9D746CBD1A3595FE009BEFCF /* MosaicData.m */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		9D746CBE1A3595FE009BEFCF /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				9D746CBF1A3595FE009BEFCF /* MosaicLayoutDelegate.h */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		9D746CC01A3595FE009BEFCF /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				9D746CC11A3595FE009BEFCF /* MosaicCell.h */,
+				9D746CC21A3595FE009BEFCF /* MosaicCell.m */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		9D746CC91A35987F009BEFCF /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				9D746CC61A359879009BEFCF /* BCImageManager.h */,
+				9D746CC71A359879009BEFCF /* BCImageManager.m */,
+			);
+			name = Managers;
+			sourceTree = "<group>";
+		};
+		9D746CCD1A35A7A2009BEFCF /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				9D746CCA1A35A79C009BEFCF /* BCImageResult.h */,
+				9D746CCB1A35A79C009BEFCF /* BCImageResult.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		9D746CD11A35A89A009BEFCF /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				9D746CCE1A35A88D009BEFCF /* NSArray+BCAdditions.h */,
+				9D746CCF1A35A88D009BEFCF /* NSArray+BCAdditions.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -126,9 +253,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9D746CAD1A358E0E009BEFCF /* Build configuration list for PBXNativeTarget "BCImagePicker" */;
 			buildPhases = (
+				CDF4E38B3BF7E46CCF088280 /* Check Pods Manifest.lock */,
 				9D746C861A358E0E009BEFCF /* Sources */,
 				9D746C871A358E0E009BEFCF /* Frameworks */,
 				9D746C881A358E0E009BEFCF /* Resources */,
+				994F93C709A811E2E31BC0CD /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -199,8 +328,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9D746C991A358E0E009BEFCF /* Main.storyboard in Resources */,
-				9D746C9E1A358E0E009BEFCF /* LaunchScreen.xib in Resources */,
 				9D746C9B1A358E0E009BEFCF /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -214,14 +341,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		994F93C709A811E2E31BC0CD /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CDF4E38B3BF7E46CCF088280 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		9D746C861A358E0E009BEFCF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9D746C961A358E0E009BEFCF /* ViewController.m in Sources */,
-				9D746C931A358E0E009BEFCF /* AppDelegate.m in Sources */,
+				9D746CB51A3590A8009BEFCF /* BCHomeViewController.m in Sources */,
+				9D746CCC1A35A79C009BEFCF /* BCImageResult.m in Sources */,
+				9D746CC51A3595FE009BEFCF /* MosaicCell.m in Sources */,
+				9D746CD41A35B097009BEFCF /* BCImageCollectionViewCell.m in Sources */,
+				9D746C931A358E0E009BEFCF /* BCAppDelegate.m in Sources */,
+				9D746CC81A359879009BEFCF /* BCImageManager.m in Sources */,
+				9D746CD01A35A88D009BEFCF /* NSArray+BCAdditions.m in Sources */,
 				9D746C901A358E0E009BEFCF /* main.m in Sources */,
+				9D746CC41A3595FE009BEFCF /* MosaicData.m in Sources */,
+				9D746CC31A3595FE009BEFCF /* MosaicLayout.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -242,25 +409,6 @@
 			targetProxy = 9D746CA41A358E0E009BEFCF /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		9D746C971A358E0E009BEFCF /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				9D746C981A358E0E009BEFCF /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		9D746C9C1A358E0E009BEFCF /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				9D746C9D1A358E0E009BEFCF /* Base */,
-			);
-			name = LaunchScreen.xib;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		9D746CAB1A358E0E009BEFCF /* Debug */ = {
@@ -341,8 +489,10 @@
 		};
 		9D746CAE1A358E0E009BEFCF /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9E87277515B9CF50B16BD851 /* Pods.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-2";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = BCImagePicker/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -351,8 +501,10 @@
 		};
 		9D746CAF1A358E0E009BEFCF /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 21CCCE696548561CAFB1ECBE /* Pods.release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-2";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = BCImagePicker/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -412,6 +564,7 @@
 				9D746CAF1A358E0E009BEFCF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9D746CB01A358E0E009BEFCF /* Build configuration list for PBXNativeTarget "BCImagePickerTests" */ = {
 			isa = XCConfigurationList;
@@ -420,6 +573,7 @@
 				9D746CB21A358E0E009BEFCF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
