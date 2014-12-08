@@ -54,8 +54,8 @@ static NSString * const kHistoryCellIdentifier = @"BCHistoryCell";
 
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-
-    NSString *query = [BCSearchHistoryManager sharedManager].searches[indexPath.row];
+    BCSearchHistoryManager *searchHistoryManager = [BCSearchHistoryManager sharedManager];
+    NSString *query = searchHistoryManager.searches[searchHistoryManager.searches.count - indexPath.row - 1];
 
     if ([self.delegate respondsToSelector:@selector(searchHistoryViewController:didSelectQuery:)]) {
         [self.delegate searchHistoryViewController:self didSelectQuery:query];

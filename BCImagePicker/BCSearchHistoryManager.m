@@ -30,7 +30,7 @@ static NSString * const kUserDefaultsKey = @"BCSearchHistoryMangerSearchHistory"
     self = [super init];
     if (self) {
         NSArray *storedQueries = [[NSUserDefaults standardUserDefaults] arrayForKey:kUserDefaultsKey];
-        _queries = storedQueries ? [storedQueries mutableCopy] : [NSMutableArray array];
+    _queries = storedQueries ? [storedQueries mutableCopy] : [NSMutableArray array];
     }
     return self;
 }

@@ -30,6 +30,8 @@ static NSString * const kStartKey = @"start";
 @property (nonatomic, assign, readwrite) enum BCImageManagerState state;
 @property (nonatomic, assign, readwrite) NSInteger pageNumber;
 
+@property (nonatomic, strong) NSURLSessionDataTask *currentTask;
+
 @end
 
 @implementation BCImageManager
@@ -60,7 +62,7 @@ static NSString * const kStartKey = @"start";
 
     NSDictionary *parameters = @{ kVersionNumberKey : @"1.0", kResultSizeKey : [NSString stringWithFormat:@"%ld", BCImageManagerNumberOfImagesPerPage], kQueryKey : query };
 
-    [self.sessionManager GET:kBaseUrl parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
+    self.currentTask = [self.sessionManager GET:kBaseUrl parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
 
         NSArray *results = responseObject[@"responseData"][@"results"];
         NSArray *imageUrlResults = [results bc_map:^id(id object) {
@@ -89,7 +91,7 @@ static NSString * const kStartKey = @"start";
     self.pageNumber += 1;
 
     NSDictionary *parameters = @{ kVersionNumberKey : @"1.0", kResultSizeKey : [NSString stringWithFormat:@"%ld", BCImageManagerNumberOfImagesPerPage], kQueryKey : self.query , kStartKey : [NSString stringWithFormat:@"%ld", BCImageManagerNumberOfImagesPerPage * self.pageNumber] };
-    [self.sessionManager GET:kBaseUrl parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
+    self.currentTask = [self.sessionManager GET:kBaseUrl parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
 
         // Make sure we can still get results
         NSDictionary *responseData = [responseObject bc_dictionaryForKey:@"responseData"];
@@ -119,6 +121,14 @@ static NSString * const kStartKey = @"start";
             completion(nil, error);
         }
     }];
+}
+
+- (void)clear {
+    [self.currentTask cancel];
+    self.results = @[];
+    self.state = BCImageManagerStateEmpty;
+    self.pageNumber = 0;
+    self.query = @"";
 }
 
 @end

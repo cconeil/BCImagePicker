@@ -13,6 +13,9 @@
 #import "BCSearchHistoryManager.h"
 #import "BCSearchHistoryViewController.h"
 
+#import <Vertigo/TGRImageViewController.h>
+#import <JTSImageViewController/JTSImageViewController.h>
+
 static const NSInteger kNumberOfColumns = 3;
 static NSString * const kImageCellReuseIdentifier = @"BCImageCollectionViewCellIdentifier";
 
@@ -33,6 +36,10 @@ static NSString * const kImageCellReuseIdentifier = @"BCImageCollectionViewCellI
     UIBarButtonItem *historyButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"History", nil) style:UIBarButtonItemStylePlain target:self action:@selector(historyButtonTapped:)];
     self.navigationItem.rightBarButtonItem = historyButton;
 
+    UIBarButtonItem *clearButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Clear", nil) style:UIBarButtonItemStylePlain target:self action:@selector(clearButtonTapped:)];
+    self.navigationItem.leftBarButtonItem = clearButton;
+
+
     // TODO: Get TopLayoutGuide working here
     self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0.0, 64.0, self.view.frame.size.width, 44.0)];
     self.searchBar.placeholder = NSLocalizedString(@"Search Google Images", nil);
@@ -48,7 +55,7 @@ static NSString * const kImageCellReuseIdentifier = @"BCImageCollectionViewCellI
 
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
-    self.collectionView.backgroundColor = [UIColor blueColor];
+    self.collectionView.backgroundColor = [UIColor colorWithWhite:0.975 alpha:1.0];
     [self.view addSubview:self.collectionView];
 }
 
@@ -60,6 +67,12 @@ static NSString * const kImageCellReuseIdentifier = @"BCImageCollectionViewCellI
         [weakSelf.collectionView reloadData];
         [weakSelf loadMoreImagesIfImagesHaveNotReachedEndOfView];
     }];
+
+    [self setClearButtonEnabled:YES];
+}
+
+- (void)setClearButtonEnabled:(BOOL)enabled {
+    self.navigationItem.leftBarButtonItem.enabled = enabled;
 }
 
 - (void)loadMoreImagesIfImagesHaveNotReachedEndOfView {
@@ -96,6 +109,15 @@ static NSString * const kImageCellReuseIdentifier = @"BCImageCollectionViewCellI
     [self.navigationController pushViewController:searchHistoryViewController animated:YES];
 }
 
+- (void)clearButtonTapped:(id)sender {
+    [self setClearButtonEnabled:NO];
+
+    self.searchBar.text = @"";
+    [self.searchBar resignFirstResponder];
+    [[BCImageManager sharedManager] clear];
+    [self.collectionView reloadData];
+}
+
 #pragma mark - UICollectionViewDataSource
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return 1;
@@ -108,10 +130,20 @@ static NSString * const kImageCellReuseIdentifier = @"BCImageCollectionViewCellI
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     BCImageCollectionViewCell *cell = (BCImageCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kImageCellReuseIdentifier forIndexPath:indexPath];
 
-    cell.backgroundColor = [UIColor greenColor];
     cell.imageResult = [BCImageManager sharedManager].results[indexPath.item];
 
     return cell;
+}
+
+#pragma mark - UICollectionViewDelegate
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    BCImageResult *result = [BCImageManager sharedManager].results[indexPath.item];
+    JTSImageInfo *imageInfo = [[JTSImageInfo alloc] init];
+    imageInfo.imageURL = [NSURL URLWithString:result.imageUrl];
+
+    JTSImageViewController *imageViewController = [[JTSImageViewController alloc] initWithImageInfo:imageInfo mode:JTSImageViewControllerMode_Image backgroundStyle:JTSImageViewControllerBackgroundOption_Scaled];
+
+    [imageViewController showFromViewController:self.navigationController transition:JTSImageViewControllerTransition_FromOffscreen];
 }
 
 #pragma mark - UICollectionViewDelegateFlowLayout
@@ -129,7 +161,6 @@ static NSString * const kImageCellReuseIdentifier = @"BCImageCollectionViewCellI
     [self.searchBar setShowsCancelButton:NO animated:YES];
 }
 
-// Performing a Search
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     [self search:searchBar.text];
     [searchBar resignFirstResponder];

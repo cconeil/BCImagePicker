@@ -29,4 +29,6 @@ extern const NSInteger BCImageManagerNumberOfImagesPerPage;
 - (void)loadImagesWithQuery:(NSString *)query completion:(void(^)(NSArray *results, NSError *error))completion;
 - (void)loadNextImages:(void(^)(NSArray *results, NSError *error))completion;
 
+- (void)clear;
+
 @end
