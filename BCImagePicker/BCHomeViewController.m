@@ -14,9 +14,10 @@
 static const NSInteger kNumberOfColumns = 3;
 static NSString * const kImageCellReuseIdentifier = @"BCImageCollectionViewCellIdentifier";
 
-@interface BCHomeViewController() <UICollectionViewDataSource, UICollectionViewDelegate, MosaicLayoutDelegate, UICollectionViewDelegateFlowLayout>
+@interface BCHomeViewController() <UICollectionViewDataSource, UICollectionViewDelegate, UISearchBarDelegate, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, strong) UICollectionView *collectionView;
+@property (nonatomic, strong) UISearchBar *searchBar;
 
 @end
 
@@ -26,16 +27,14 @@ static NSString * const kImageCellReuseIdentifier = @"BCImageCollectionViewCellI
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    MosaicLayout *mosaicLayout = [[MosaicLayout alloc] init];
-    mosaicLayout.delegate = self;
-
+    // TODO: Get TopLayoutGuide working here
+    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0.0, 64.0, self.view.frame.size.width, 44.0)];
+    self.searchBar.placeholder = NSLocalizedString(@"Search Google Images", nil);
+    self.searchBar.delegate = self;
+    [self.view addSubview:self.searchBar];
 
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    
-
-
-    self.collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:flowLayout];
-
+    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0.0, CGRectGetMaxY(self.searchBar.frame), self.view.frame.size.width, self.view.frame.size.height - CGRectGetMaxY(self.searchBar.frame)) collectionViewLayout:flowLayout];
     self.collectionView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     [self.collectionView registerClass:[BCImageCollectionViewCell class] forCellWithReuseIdentifier:kImageCellReuseIdentifier];
 
@@ -43,11 +42,10 @@ static NSString * const kImageCellReuseIdentifier = @"BCImageCollectionViewCellI
     self.collectionView.dataSource = self;
     self.collectionView.backgroundColor = [UIColor blueColor];
     [self.view addSubview:self.collectionView];
+}
 
-    __weak BCHomeViewController *weakSelf = self;
-    [[BCImageManager sharedManager] loadImagesWithQuery:@"monkey" completion:^(NSArray *results, NSError *error) {
-        [weakSelf.collectionView reloadData];
-    }];
+- (void)search {
+
 }
 
 - (CGFloat)columnWidth {
@@ -80,6 +78,31 @@ static NSString * const kImageCellReuseIdentifier = @"BCImageCollectionViewCellI
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     BCImageResult *imageResult = [BCImageManager sharedManager].results[indexPath.item];
     return CGSizeMake(imageResult.thumbnailWidth, imageResult.thumbnailHeight);
+}
+
+#pragma mark - UISearchBarDelegate
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
+    [self.searchBar setShowsCancelButton:YES animated:YES];
+}
+
+- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar {
+    [self.searchBar setShowsCancelButton:NO animated:YES];
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+
+    __weak BCHomeViewController *weakSelf = self;
+    [[BCImageManager sharedManager] loadImagesWithQuery:searchBar.text completion:^(NSArray *results, NSError *error) {
+        [weakSelf.collectionView reloadData];
+    }];
+
+    [searchBar resignFirstResponder];
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    searchBar.text = [BCImageManager sharedManager].query;
+    [searchBar resignFirstResponder];
 }
 
 #pragma mark - MosaicLayoutDelegate
