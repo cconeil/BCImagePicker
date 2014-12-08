@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9D4C74F91A362F95003175EF /* NSDictionary+BCAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D4C74F81A362F95003175EF /* NSDictionary+BCAdditions.m */; };
 		9D746C901A358E0E009BEFCF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D746C8F1A358E0E009BEFCF /* main.m */; };
 		9D746C931A358E0E009BEFCF /* BCAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D746C921A358E0E009BEFCF /* BCAppDelegate.m */; };
 		9D746C9B1A358E0E009BEFCF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D746C9A1A358E0E009BEFCF /* Images.xcassets */; };
@@ -35,6 +36,8 @@
 /* Begin PBXFileReference section */
 		1A010A520848B1FFE53E24BB /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		21CCCE696548561CAFB1ECBE /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		9D4C74F71A362F95003175EF /* NSDictionary+BCAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+BCAdditions.h"; sourceTree = "<group>"; };
+		9D4C74F81A362F95003175EF /* NSDictionary+BCAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+BCAdditions.m"; sourceTree = "<group>"; };
 		9D746C8A1A358E0E009BEFCF /* BCImagePicker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BCImagePicker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D746C8E1A358E0E009BEFCF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9D746C8F1A358E0E009BEFCF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -242,6 +245,8 @@
 			children = (
 				9D746CCE1A35A88D009BEFCF /* NSArray+BCAdditions.h */,
 				9D746CCF1A35A88D009BEFCF /* NSArray+BCAdditions.m */,
+				9D4C74F71A362F95003175EF /* NSDictionary+BCAdditions.h */,
+				9D4C74F81A362F95003175EF /* NSDictionary+BCAdditions.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -383,6 +388,7 @@
 				9D746CCC1A35A79C009BEFCF /* BCImageResult.m in Sources */,
 				9D746CC51A3595FE009BEFCF /* MosaicCell.m in Sources */,
 				9D746CD41A35B097009BEFCF /* BCImageCollectionViewCell.m in Sources */,
+				9D4C74F91A362F95003175EF /* NSDictionary+BCAdditions.m in Sources */,
 				9D746C931A358E0E009BEFCF /* BCAppDelegate.m in Sources */,
 				9D746CC81A359879009BEFCF /* BCImageManager.m in Sources */,
 				9D746CD01A35A88D009BEFCF /* NSArray+BCAdditions.m in Sources */,

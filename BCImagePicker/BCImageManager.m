@@ -10,6 +10,7 @@
 #import <AFNetworking/AFNetworking.h>
 #import "NSArray+BCAdditions.h"
 #import "BCImageResult.h"
+#import "NSDictionary+BCAdditions.h"
 
 NSString * const BCImageManagerFinishedLoadingNotification = @"BCImageManagerFinishedLoadingNotification";
 
@@ -18,9 +19,10 @@ static NSString * const kVersionNumberKey = @"v";
 static NSString * const kVersionNumber = @"1.0";
 
 static NSString * const kResultSizeKey = @"rsz";
-static NSString * const kResultSize = @"8";
+static const NSInteger kResultSize = 8;
 
 static NSString * const kQueryKey = @"q";
+static NSString * const kStartKey = @"start";
 
 @interface BCImageManager()
 
@@ -28,6 +30,7 @@ static NSString * const kQueryKey = @"q";
 
 @property (nonatomic, copy, readwrite) NSString *query;
 @property (nonatomic, assign, readwrite) enum BCImageManagerState state;
+@property (nonatomic, assign) NSInteger pageNumber;
 
 @end
 
@@ -53,9 +56,12 @@ static NSString * const kQueryKey = @"q";
 }
 
 - (void)loadImagesWithQuery:(NSString *)query completion:(void (^)(NSArray *, NSError *))completion {
+    self.state = BCImageManagerStateLoading;
     self.query = query;
+    self.pageNumber = 0;
 
-    NSDictionary *parameters = @{ kVersionNumberKey : @"1.0", kResultSizeKey : kResultSize, kQueryKey : query };
+    NSDictionary *parameters = @{ kVersionNumberKey : @"1.0", kResultSizeKey : [NSString stringWithFormat:@"%ld", kResultSize], kQueryKey : query };
+
     [self.sessionManager GET:kBaseUrl parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
 
         NSArray *results = responseObject[@"responseData"][@"results"];
@@ -64,12 +70,14 @@ static NSString * const kQueryKey = @"q";
         }];
 
         self.results = [self.results arrayByAddingObjectsFromArray:imageUrlResults];
+        self.state = BCImageManagerStateLoaded;
         
         if (completion) {
             completion(imageUrlResults, nil);
         }
         [[NSNotificationCenter defaultCenter] postNotificationName:BCImageManagerFinishedLoadingNotification object:nil];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        self.state = BCImageManagerStateLoaded;
         if (completion) {
             completion(nil, error);
         }
@@ -78,7 +86,46 @@ static NSString * const kQueryKey = @"q";
 }
 
 - (void)loadNextImages:(void (^)(NSArray *, NSError *))completion {
+    NSAssert(self.state != BCImageManagerStateLoading, @"You can't load the next page while one is already loading");
+    NSAssert(self.state != BCImageManagerStateReachedEnd, @"You've already reached the end of this search");
 
+
+    self.state = BCImageManagerStateLoading;
+    self.pageNumber += 1;
+
+    NSDictionary *parameters = @{ kVersionNumberKey : @"1.0", kResultSizeKey : [NSString stringWithFormat:@"%ld", kResultSize], kQueryKey : self.query , kStartKey : [NSString stringWithFormat:@"%ld", kResultSize * self.pageNumber] };
+    [self.sessionManager GET:kBaseUrl parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
+
+        // Make sure we can still get results
+        NSDictionary *responseData = [responseObject bc_dictionaryForKey:@"responseData"];
+        if (!responseData) {
+            self.state = BCImageManagerStateReachedEnd;
+
+            if (completion) {
+                completion(@[], nil);
+            }
+        } else {
+            NSArray *results = responseData[@"results"];
+            NSArray *imageUrlResults = [results bc_map:^id(id object) {
+                return [[BCImageResult alloc] initWithDictionary:object];
+            }];
+
+            self.results = [self.results arrayByAddingObjectsFromArray:imageUrlResults];
+            self.state = BCImageManagerStateLoaded;
+
+            if (completion) {
+                completion(imageUrlResults, nil);
+            }
+        }
+
+        [[NSNotificationCenter defaultCenter] postNotificationName:BCImageManagerFinishedLoadingNotification object:nil];
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        self.state = BCImageManagerStateLoaded;
+        if (completion) {
+            completion(nil, error);
+        }
+        [[NSNotificationCenter defaultCenter] postNotificationName:BCImageManagerFinishedLoadingNotification object:nil];
+    }];
 }
 
 @end

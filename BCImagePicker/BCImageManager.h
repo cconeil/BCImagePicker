@@ -11,7 +11,8 @@
 NS_ENUM(NSInteger, BCImageManagerState) {
     BCImageManagerStateEmpty = 0,
     BCImageManagerStateLoading,
-    BCImageManagerStateLoaded
+    BCImageManagerStateLoaded,
+    BCImageManagerStateReachedEnd
 };
 
 extern NSString * const BCImageManagerFinishedLoadingNotification;

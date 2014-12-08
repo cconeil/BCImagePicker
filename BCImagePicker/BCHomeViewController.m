@@ -14,7 +14,7 @@
 static const NSInteger kNumberOfColumns = 3;
 static NSString * const kImageCellReuseIdentifier = @"BCImageCollectionViewCellIdentifier";
 
-@interface BCHomeViewController() <UICollectionViewDataSource, UICollectionViewDelegate, UISearchBarDelegate, UICollectionViewDelegateFlowLayout>
+@interface BCHomeViewController() <UICollectionViewDataSource, UICollectionViewDelegate, UISearchBarDelegate, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate>
 
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) UISearchBar *searchBar;
@@ -81,7 +81,6 @@ static NSString * const kImageCellReuseIdentifier = @"BCImageCollectionViewCellI
 }
 
 #pragma mark - UISearchBarDelegate
-
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
     [self.searchBar setShowsCancelButton:YES animated:YES];
 }
@@ -91,7 +90,6 @@ static NSString * const kImageCellReuseIdentifier = @"BCImageCollectionViewCellI
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-
     __weak BCHomeViewController *weakSelf = self;
     [[BCImageManager sharedManager] loadImagesWithQuery:searchBar.text completion:^(NSArray *results, NSError *error) {
         [weakSelf.collectionView reloadData];
@@ -103,6 +101,23 @@ static NSString * const kImageCellReuseIdentifier = @"BCImageCollectionViewCellI
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     searchBar.text = [BCImageManager sharedManager].query;
     [searchBar resignFirstResponder];
+}
+
+#pragma mark - UIScrollViewDelegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+
+    // When we have scrolled to the bottom of the images we should request a set
+    // of new images.  This gives us the "infinite scroll" effect.
+    CGFloat bottom = scrollView.contentOffset.y + scrollView.frame.size.height;
+    if (bottom >= scrollView.contentSize.height) {
+
+        BCImageManager *imageManager = [BCImageManager sharedManager];
+        if (imageManager.state != BCImageManagerStateLoading && imageManager.state != BCImageManagerStateReachedEnd) {
+            [imageManager loadNextImages:^(NSArray *results, NSError *error) {
+                [self.collectionView reloadData];
+            }];
+        }
+    }
 }
 
 #pragma mark - MosaicLayoutDelegate
