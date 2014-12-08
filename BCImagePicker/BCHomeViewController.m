@@ -10,6 +10,7 @@
 #import "MosaicLayout.h"
 #import "BCImageManager.h"
 #import "BCImageCollectionViewCell.h"
+#import "BCSearchHistoryManager.h"
 
 static const NSInteger kNumberOfColumns = 3;
 static NSString * const kImageCellReuseIdentifier = @"BCImageCollectionViewCellIdentifier";
@@ -44,8 +45,13 @@ static NSString * const kImageCellReuseIdentifier = @"BCImageCollectionViewCellI
     [self.view addSubview:self.collectionView];
 }
 
-- (void)search {
+- (void)search:(NSString *)query {
+    [[BCSearchHistoryManager sharedManager] addSearch:query];
 
+    __weak BCHomeViewController *weakSelf = self;
+    [[BCImageManager sharedManager] loadImagesWithQuery:query completion:^(NSArray *results, NSError *error) {
+        [weakSelf.collectionView reloadData];
+    }];
 }
 
 - (CGFloat)columnWidth {
@@ -89,12 +95,9 @@ static NSString * const kImageCellReuseIdentifier = @"BCImageCollectionViewCellI
     [self.searchBar setShowsCancelButton:NO animated:YES];
 }
 
+// Performing a Search
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    __weak BCHomeViewController *weakSelf = self;
-    [[BCImageManager sharedManager] loadImagesWithQuery:searchBar.text completion:^(NSArray *results, NSError *error) {
-        [weakSelf.collectionView reloadData];
-    }];
-
+    [self search:searchBar.text];
     [searchBar resignFirstResponder];
 }
 
