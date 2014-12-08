@@ -16,7 +16,7 @@
 static const NSInteger kNumberOfColumns = 3;
 static NSString * const kImageCellReuseIdentifier = @"BCImageCollectionViewCellIdentifier";
 
-@interface BCHomeViewController() <UICollectionViewDataSource, UICollectionViewDelegate, UISearchBarDelegate, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate>
+@interface BCHomeViewController() <UICollectionViewDataSource, UICollectionViewDelegate, UISearchBarDelegate, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate, MosaicLayoutDelegate>
 
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) UISearchBar *searchBar;
@@ -39,8 +39,10 @@ static NSString * const kImageCellReuseIdentifier = @"BCImageCollectionViewCellI
     self.searchBar.delegate = self;
     [self.view addSubview:self.searchBar];
 
-    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0.0, CGRectGetMaxY(self.searchBar.frame), self.view.frame.size.width, self.view.frame.size.height - CGRectGetMaxY(self.searchBar.frame)) collectionViewLayout:flowLayout];
+    MosaicLayout *mosaicLayout = [[MosaicLayout alloc] init];
+    mosaicLayout.delegate = self;
+
+    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0.0, CGRectGetMaxY(self.searchBar.frame), self.view.frame.size.width, self.view.frame.size.height - CGRectGetMaxY(self.searchBar.frame)) collectionViewLayout:mosaicLayout];
     self.collectionView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     [self.collectionView registerClass:[BCImageCollectionViewCell class] forCellWithReuseIdentifier:kImageCellReuseIdentifier];
 
@@ -135,15 +137,17 @@ static NSString * const kImageCellReuseIdentifier = @"BCImageCollectionViewCellI
 
 #pragma mark - MosaicLayoutDelegate
 - (float)collectionView:(UICollectionView *)collectionView relativeHeightForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return 40.0;
+    BCImageResult *result = [BCImageManager sharedManager].results[indexPath.row];
+    return result.thumbnailHeight / result.thumbnailWidth;
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView isDoubleColumnAtIndexPath:(NSIndexPath *)indexPath {
-    return NO;
+    BCImageResult *result = [BCImageManager sharedManager].results[indexPath.row];
+    return result.thumbnailWidth / 2.0 > result.thumbnailHeight;
 }
 
 - (NSUInteger)numberOfColumnsInCollectionView:(UICollectionView *)collectionView {
-    return 1;
+    return 3;
 }
 
 @end
