@@ -12,8 +12,6 @@
 #import "BCImageCollectionViewCell.h"
 #import "BCSearchHistoryManager.h"
 #import "BCSearchHistoryViewController.h"
-
-#import <Vertigo/TGRImageViewController.h>
 #import <JTSImageViewController/JTSImageViewController.h>
 
 static const NSInteger kNumberOfColumns = 3;
@@ -32,6 +30,7 @@ static NSString * const kImageCellReuseIdentifier = @"BCImageCollectionViewCellI
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    // Style the Navigation Bar
     self.title = NSLocalizedString(@"Image Picker", nil);
     UIBarButtonItem *historyButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"History", nil) style:UIBarButtonItemStylePlain target:self action:@selector(historyButtonTapped:)];
     self.navigationItem.rightBarButtonItem = historyButton;
@@ -39,13 +38,13 @@ static NSString * const kImageCellReuseIdentifier = @"BCImageCollectionViewCellI
     UIBarButtonItem *clearButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Clear", nil) style:UIBarButtonItemStylePlain target:self action:@selector(clearButtonTapped:)];
     self.navigationItem.leftBarButtonItem = clearButton;
 
-
-    // TODO: Get TopLayoutGuide working here
-    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0.0, 64.0, self.view.frame.size.width, 44.0)];
+    // Setup the Search Bar
+    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0.0, 0.0, self.view.frame.size.width, 44.0)];
     self.searchBar.placeholder = NSLocalizedString(@"Search Google Images", nil);
     self.searchBar.delegate = self;
     [self.view addSubview:self.searchBar];
 
+    // Setup the Collection View
     MosaicLayout *mosaicLayout = [[MosaicLayout alloc] init];
     mosaicLayout.delegate = self;
 
@@ -75,6 +74,8 @@ static NSString * const kImageCellReuseIdentifier = @"BCImageCollectionViewCellI
     self.navigationItem.leftBarButtonItem.enabled = enabled;
 }
 
+// This function recursively loads more images if the first page of images does
+// contain enough images to fill the entire page.
 - (void)loadMoreImagesIfImagesHaveNotReachedEndOfView {
     BCImageManager *imageManager = [BCImageManager sharedManager];
     if (self.collectionView.contentSize.height < self.collectionView.frame.size.height && [self.searchBar.text isEqualToString:imageManager.query]) {
@@ -141,15 +142,11 @@ static NSString * const kImageCellReuseIdentifier = @"BCImageCollectionViewCellI
     JTSImageInfo *imageInfo = [[JTSImageInfo alloc] init];
     imageInfo.imageURL = [NSURL URLWithString:result.imageUrl];
 
-    JTSImageViewController *imageViewController = [[JTSImageViewController alloc] initWithImageInfo:imageInfo mode:JTSImageViewControllerMode_Image backgroundStyle:JTSImageViewControllerBackgroundOption_Scaled];
-
+    // NOTE: There is a bug in iPhone 6 and iPhone 6 Plus Simulators where the view will
+    // jerk right before presenting
+    // https://github.com/jaredsinclair/JTSImageViewController/issues/39
+    JTSImageViewController *imageViewController = [[JTSImageViewController alloc] initWithImageInfo:imageInfo mode:JTSImageViewControllerMode_Image backgroundStyle:JTSImageViewControllerBackgroundOption_Blurred];
     [imageViewController showFromViewController:self.navigationController transition:JTSImageViewControllerTransition_FromOffscreen];
-}
-
-#pragma mark - UICollectionViewDelegateFlowLayout
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    BCImageResult *imageResult = [BCImageManager sharedManager].results[indexPath.item];
-    return CGSizeMake(imageResult.thumbnailWidth, imageResult.thumbnailHeight);
 }
 
 #pragma mark - UISearchBarDelegate
@@ -173,7 +170,6 @@ static NSString * const kImageCellReuseIdentifier = @"BCImageCollectionViewCellI
 
 #pragma mark - UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-
     // When we have scrolled to the bottom of the images we should request a set
     // of new images.  This gives us the "infinite scroll" effect.
     CGFloat bottom = scrollView.contentOffset.y + scrollView.frame.size.height;

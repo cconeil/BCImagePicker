@@ -10,6 +10,4 @@
 
 @interface BCHomeViewController : UIViewController
 
-
-
 @end

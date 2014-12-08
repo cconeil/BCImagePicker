@@ -22,6 +22,8 @@ static NSString * const kHistoryCellIdentifier = @"BCHistoryCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    self.title = NSLocalizedString(@"History", nil);
+    
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;

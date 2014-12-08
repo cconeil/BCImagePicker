@@ -25,12 +25,12 @@ static NSString * const kStartKey = @"start";
 @interface BCImageManager()
 
 @property (nonatomic, strong) AFHTTPSessionManager *sessionManager;
+@property (nonatomic, strong) NSURLSessionDataTask *currentTask;
 
+@property (nonatomic, strong, readwrite) NSArray *results;
 @property (nonatomic, copy, readwrite) NSString *query;
 @property (nonatomic, assign, readwrite) enum BCImageManagerState state;
 @property (nonatomic, assign, readwrite) NSInteger pageNumber;
-
-@property (nonatomic, strong) NSURLSessionDataTask *currentTask;
 
 @end
 

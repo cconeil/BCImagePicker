@@ -11,6 +11,7 @@
 
 @interface BCImageCollectionViewCell : UICollectionViewCell
 
+// Setting this property will handle image download and setting
 @property (nonatomic, strong) BCImageResult *imageResult;
 
 @end

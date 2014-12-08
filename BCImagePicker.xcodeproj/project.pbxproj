@@ -16,8 +16,6 @@
 		9D746CAA1A358E0E009BEFCF /* BCImagePickerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D746CA91A358E0E009BEFCF /* BCImagePickerTests.m */; };
 		9D746CB51A3590A8009BEFCF /* BCHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D746CB41A3590A8009BEFCF /* BCHomeViewController.m */; };
 		9D746CC31A3595FE009BEFCF /* MosaicLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D746CBA1A3595FE009BEFCF /* MosaicLayout.m */; };
-		9D746CC41A3595FE009BEFCF /* MosaicData.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D746CBD1A3595FE009BEFCF /* MosaicData.m */; };
-		9D746CC51A3595FE009BEFCF /* MosaicCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D746CC21A3595FE009BEFCF /* MosaicCell.m */; };
 		9D746CC81A359879009BEFCF /* BCImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D746CC71A359879009BEFCF /* BCImageManager.m */; };
 		9D746CCC1A35A79C009BEFCF /* BCImageResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D746CCB1A35A79C009BEFCF /* BCImageResult.m */; };
 		9D746CD01A35A88D009BEFCF /* NSArray+BCAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D746CCF1A35A88D009BEFCF /* NSArray+BCAdditions.m */; };
@@ -57,11 +55,7 @@
 		9D746CB41A3590A8009BEFCF /* BCHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCHomeViewController.m; sourceTree = "<group>"; };
 		9D746CB91A3595FE009BEFCF /* MosaicLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MosaicLayout.h; sourceTree = "<group>"; };
 		9D746CBA1A3595FE009BEFCF /* MosaicLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MosaicLayout.m; sourceTree = "<group>"; };
-		9D746CBC1A3595FE009BEFCF /* MosaicData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MosaicData.h; sourceTree = "<group>"; };
-		9D746CBD1A3595FE009BEFCF /* MosaicData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MosaicData.m; sourceTree = "<group>"; };
 		9D746CBF1A3595FE009BEFCF /* MosaicLayoutDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MosaicLayoutDelegate.h; sourceTree = "<group>"; };
-		9D746CC11A3595FE009BEFCF /* MosaicCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MosaicCell.h; sourceTree = "<group>"; };
-		9D746CC21A3595FE009BEFCF /* MosaicCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MosaicCell.m; sourceTree = "<group>"; };
 		9D746CC61A359879009BEFCF /* BCImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCImageManager.h; sourceTree = "<group>"; };
 		9D746CC71A359879009BEFCF /* BCImageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCImageManager.m; sourceTree = "<group>"; };
 		9D746CCA1A35A79C009BEFCF /* BCImageResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCImageResult.h; sourceTree = "<group>"; };
@@ -132,14 +126,13 @@
 		9D746C8C1A358E0E009BEFCF /* BCImagePicker */ = {
 			isa = PBXGroup;
 			children = (
-				9D746CD21A35B097009BEFCF /* BCImageCollectionViewCell.h */,
-				9D746CD31A35B097009BEFCF /* BCImageCollectionViewCell.m */,
-				9D746CD11A35A89A009BEFCF /* Categories */,
-				9D746CCD1A35A7A2009BEFCF /* Models */,
 				9D746C911A358E0E009BEFCF /* BCAppDelegate.h */,
 				9D746C921A358E0E009BEFCF /* BCAppDelegate.m */,
+				9D746CD11A35A89A009BEFCF /* Categories */,
 				9D746CC91A35987F009BEFCF /* Managers */,
+				9D746CCD1A35A7A2009BEFCF /* Models */,
 				9D746CB61A35913E009BEFCF /* View Controllers */,
+				9DDB65F81A3668DA003AC2A1 /* Views */,
 				9D746CB71A3595FE009BEFCF /* MosaicLayout */,
 				9D746C9A1A358E0E009BEFCF /* Images.xcassets */,
 				9D746C8D1A358E0E009BEFCF /* Supporting Files */,
@@ -188,9 +181,7 @@
 			isa = PBXGroup;
 			children = (
 				9D746CB81A3595FE009BEFCF /* Controllers */,
-				9D746CBB1A3595FE009BEFCF /* Entities */,
 				9D746CBE1A3595FE009BEFCF /* Protocols */,
-				9D746CC01A3595FE009BEFCF /* Views */,
 			);
 			path = MosaicLayout;
 			sourceTree = "<group>";
@@ -204,30 +195,12 @@
 			path = Controllers;
 			sourceTree = "<group>";
 		};
-		9D746CBB1A3595FE009BEFCF /* Entities */ = {
-			isa = PBXGroup;
-			children = (
-				9D746CBC1A3595FE009BEFCF /* MosaicData.h */,
-				9D746CBD1A3595FE009BEFCF /* MosaicData.m */,
-			);
-			path = Entities;
-			sourceTree = "<group>";
-		};
 		9D746CBE1A3595FE009BEFCF /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
 				9D746CBF1A3595FE009BEFCF /* MosaicLayoutDelegate.h */,
 			);
 			path = Protocols;
-			sourceTree = "<group>";
-		};
-		9D746CC01A3595FE009BEFCF /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				9D746CC11A3595FE009BEFCF /* MosaicCell.h */,
-				9D746CC21A3595FE009BEFCF /* MosaicCell.m */,
-			);
-			path = Views;
 			sourceTree = "<group>";
 		};
 		9D746CC91A35987F009BEFCF /* Managers */ = {
@@ -259,6 +232,15 @@
 				9D4C74F81A362F95003175EF /* NSDictionary+BCAdditions.m */,
 			);
 			name = Categories;
+			sourceTree = "<group>";
+		};
+		9DDB65F81A3668DA003AC2A1 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				9D746CD21A35B097009BEFCF /* BCImageCollectionViewCell.h */,
+				9D746CD31A35B097009BEFCF /* BCImageCollectionViewCell.m */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -396,7 +378,6 @@
 			files = (
 				9D746CB51A3590A8009BEFCF /* BCHomeViewController.m in Sources */,
 				9D746CCC1A35A79C009BEFCF /* BCImageResult.m in Sources */,
-				9D746CC51A3595FE009BEFCF /* MosaicCell.m in Sources */,
 				9D746CD41A35B097009BEFCF /* BCImageCollectionViewCell.m in Sources */,
 				9D4C74F91A362F95003175EF /* NSDictionary+BCAdditions.m in Sources */,
 				9D4C74FF1A363231003175EF /* BCSearchHistoryManager.m in Sources */,
@@ -404,7 +385,6 @@
 				9D746CC81A359879009BEFCF /* BCImageManager.m in Sources */,
 				9D746CD01A35A88D009BEFCF /* NSArray+BCAdditions.m in Sources */,
 				9D746C901A358E0E009BEFCF /* main.m in Sources */,
-				9D746CC41A3595FE009BEFCF /* MosaicData.m in Sources */,
 				9D4C74FC1A36321B003175EF /* BCSearchHistoryViewController.m in Sources */,
 				9D746CC31A3595FE009BEFCF /* MosaicLayout.m in Sources */,
 			);

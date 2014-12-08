@@ -12,7 +12,12 @@
 
 + (BCSearchHistoryManager *)sharedManager;
 
+// A list of all searches on the current device.  The searches are in chronological
+// order, therefore older searches appear earlier in the array.  The most recent
+// search is the last object in the returned array.
 - (NSArray *)searches;
+
+// Adds a search to the persitent store on the device
 - (void)addSearch:(NSString *)query;
 
 @end

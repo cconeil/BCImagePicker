@@ -19,16 +19,20 @@ extern const NSInteger BCImageManagerNumberOfImagesPerPage;
 
 @interface BCImageManager : NSObject
 
-@property (nonatomic, strong) NSArray *results;
+@property (nonatomic, strong, readonly) NSArray *results;
 @property (nonatomic, copy, readonly) NSString *query;
 @property (nonatomic, assign, readonly) enum BCImageManagerState state;
 @property (nonatomic, assign, readonly) NSInteger pageNumber;
 
 + (BCImageManager *)sharedManager;
 
+// Load the first page of images
 - (void)loadImagesWithQuery:(NSString *)query completion:(void(^)(NSArray *results, NSError *error))completion;
+
+// Load the next page of images
 - (void)loadNextImages:(void(^)(NSArray *results, NSError *error))completion;
 
+// Clears all of the state of the image manager and cancels any pending requests
 - (void)clear;
 
 @end

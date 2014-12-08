@@ -10,6 +10,8 @@
 
 @interface NSArray (BCAdditions)
 
+// Returns an array of the mapped objects.  If you return nil from the block,
+// that object will not be added into the return array.
 - (NSArray *)bc_map:(id (^)(id object))block;
 
 @end
