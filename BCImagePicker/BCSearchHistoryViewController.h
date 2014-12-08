@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol BCSearchHistoryViewControllerDelegate;
+
 @interface BCSearchHistoryViewController : UIViewController
+@property (nonatomic, weak) id<BCSearchHistoryViewControllerDelegate> delegate;
+@end
+
+@protocol BCSearchHistoryViewControllerDelegate <NSObject>
+@optional
+- (void)searchHistoryViewController:(BCSearchHistoryViewController *)viewController didSelectQuery:(NSString *)query;
 
 @end

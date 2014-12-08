@@ -15,13 +15,14 @@ NS_ENUM(NSInteger, BCImageManagerState) {
     BCImageManagerStateReachedEnd
 };
 
-extern NSString * const BCImageManagerFinishedLoadingNotification;
+extern const NSInteger BCImageManagerNumberOfImagesPerPage;
 
 @interface BCImageManager : NSObject
 
 @property (nonatomic, strong) NSArray *results;
 @property (nonatomic, copy, readonly) NSString *query;
 @property (nonatomic, assign, readonly) enum BCImageManagerState state;
+@property (nonatomic, assign, readonly) NSInteger pageNumber;
 
 + (BCImageManager *)sharedManager;
 

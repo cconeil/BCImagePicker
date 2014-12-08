@@ -12,14 +12,12 @@
 #import "BCImageResult.h"
 #import "NSDictionary+BCAdditions.h"
 
-NSString * const BCImageManagerFinishedLoadingNotification = @"BCImageManagerFinishedLoadingNotification";
-
 static NSString * const kBaseUrl = @"https://ajax.googleapis.com/ajax/services/search/images";
 static NSString * const kVersionNumberKey = @"v";
 static NSString * const kVersionNumber = @"1.0";
 
 static NSString * const kResultSizeKey = @"rsz";
-static const NSInteger kResultSize = 8;
+const NSInteger BCImageManagerNumberOfImagesPerPage = 8;
 
 static NSString * const kQueryKey = @"q";
 static NSString * const kStartKey = @"start";
@@ -30,7 +28,7 @@ static NSString * const kStartKey = @"start";
 
 @property (nonatomic, copy, readwrite) NSString *query;
 @property (nonatomic, assign, readwrite) enum BCImageManagerState state;
-@property (nonatomic, assign) NSInteger pageNumber;
+@property (nonatomic, assign, readwrite) NSInteger pageNumber;
 
 @end
 
@@ -60,7 +58,7 @@ static NSString * const kStartKey = @"start";
     self.query = query;
     self.pageNumber = 0;
 
-    NSDictionary *parameters = @{ kVersionNumberKey : @"1.0", kResultSizeKey : [NSString stringWithFormat:@"%ld", kResultSize], kQueryKey : query };
+    NSDictionary *parameters = @{ kVersionNumberKey : @"1.0", kResultSizeKey : [NSString stringWithFormat:@"%ld", BCImageManagerNumberOfImagesPerPage], kQueryKey : query };
 
     [self.sessionManager GET:kBaseUrl parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
 
@@ -75,13 +73,11 @@ static NSString * const kStartKey = @"start";
         if (completion) {
             completion(imageUrlResults, nil);
         }
-        [[NSNotificationCenter defaultCenter] postNotificationName:BCImageManagerFinishedLoadingNotification object:nil];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         self.state = BCImageManagerStateLoaded;
         if (completion) {
             completion(nil, error);
         }
-        [[NSNotificationCenter defaultCenter] postNotificationName:BCImageManagerFinishedLoadingNotification object:nil];
     }];
 }
 
@@ -92,7 +88,7 @@ static NSString * const kStartKey = @"start";
     self.state = BCImageManagerStateLoading;
     self.pageNumber += 1;
 
-    NSDictionary *parameters = @{ kVersionNumberKey : @"1.0", kResultSizeKey : [NSString stringWithFormat:@"%ld", kResultSize], kQueryKey : self.query , kStartKey : [NSString stringWithFormat:@"%ld", kResultSize * self.pageNumber] };
+    NSDictionary *parameters = @{ kVersionNumberKey : @"1.0", kResultSizeKey : [NSString stringWithFormat:@"%ld", BCImageManagerNumberOfImagesPerPage], kQueryKey : self.query , kStartKey : [NSString stringWithFormat:@"%ld", BCImageManagerNumberOfImagesPerPage * self.pageNumber] };
     [self.sessionManager GET:kBaseUrl parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
 
         // Make sure we can still get results
@@ -117,13 +113,11 @@ static NSString * const kStartKey = @"start";
             }
         }
 
-        [[NSNotificationCenter defaultCenter] postNotificationName:BCImageManagerFinishedLoadingNotification object:nil];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         self.state = BCImageManagerStateLoaded;
         if (completion) {
             completion(nil, error);
         }
-        [[NSNotificationCenter defaultCenter] postNotificationName:BCImageManagerFinishedLoadingNotification object:nil];
     }];
 }
 

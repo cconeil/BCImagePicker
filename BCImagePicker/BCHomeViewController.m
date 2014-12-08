@@ -16,7 +16,7 @@
 static const NSInteger kNumberOfColumns = 3;
 static NSString * const kImageCellReuseIdentifier = @"BCImageCollectionViewCellIdentifier";
 
-@interface BCHomeViewController() <UICollectionViewDataSource, UICollectionViewDelegate, UISearchBarDelegate, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate, MosaicLayoutDelegate>
+@interface BCHomeViewController() <UICollectionViewDataSource, UICollectionViewDelegate, UISearchBarDelegate, UIScrollViewDelegate, MosaicLayoutDelegate, BCSearchHistoryViewControllerDelegate>
 
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) UISearchBar *searchBar;
@@ -58,20 +58,42 @@ static NSString * const kImageCellReuseIdentifier = @"BCImageCollectionViewCellI
     __weak BCHomeViewController *weakSelf = self;
     [[BCImageManager sharedManager] loadImagesWithQuery:query completion:^(NSArray *results, NSError *error) {
         [weakSelf.collectionView reloadData];
+        [weakSelf loadMoreImagesIfImagesHaveNotReachedEndOfView];
     }];
+}
+
+- (void)loadMoreImagesIfImagesHaveNotReachedEndOfView {
+    BCImageManager *imageManager = [BCImageManager sharedManager];
+    if (self.collectionView.contentSize.height < self.collectionView.frame.size.height && [self.searchBar.text isEqualToString:imageManager.query]) {
+        // we need to load more images
+
+        if (imageManager.state != BCImageManagerStateLoading && imageManager.state != BCImageManagerStateReachedEnd) {
+            __weak BCHomeViewController *weakSelf = self;
+            NSInteger nextPage = imageManager.pageNumber + 1;
+            [imageManager loadNextImages:^(NSArray *results, NSError *error) {
+                if (results.count > 0) {
+                    [weakSelf.collectionView insertItemsAtIndexPaths:[self indexPathsForPageNumber:nextPage]];
+                    [weakSelf loadMoreImagesIfImagesHaveNotReachedEndOfView];
+                }
+            }];
+        }
+    }
+}
+
+- (NSArray *)indexPathsForPageNumber:(NSInteger)pageNumber {
+    NSMutableArray *indexPaths = [NSMutableArray arrayWithCapacity:BCImageManagerNumberOfImagesPerPage];
+    NSInteger start = pageNumber * BCImageManagerNumberOfImagesPerPage;
+    for (NSInteger i = 0; i < BCImageManagerNumberOfImagesPerPage; i++) {
+        [indexPaths addObject:[NSIndexPath indexPathForItem:start + i inSection:0]];
+    }
+
+    return indexPaths;
 }
 
 - (void)historyButtonTapped:(id)sender {
     BCSearchHistoryViewController *searchHistoryViewController = [[BCSearchHistoryViewController alloc] initWithNibName:nil bundle:nil];
+    searchHistoryViewController.delegate = self;
     [self.navigationController pushViewController:searchHistoryViewController animated:YES];
-}
-
-- (CGFloat)columnWidth {
-    return self.view.frame.size.width / kNumberOfColumns;
-}
-
-- (CGFloat)columnHeight {
-    return self.view.frame.size.height / 4.0;
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -126,10 +148,15 @@ static NSString * const kImageCellReuseIdentifier = @"BCImageCollectionViewCellI
     CGFloat bottom = scrollView.contentOffset.y + scrollView.frame.size.height;
     if (bottom >= scrollView.contentSize.height) {
 
+        __weak BCHomeViewController *weakSelf = self;
         BCImageManager *imageManager = [BCImageManager sharedManager];
+        NSInteger nextPage = imageManager.pageNumber + 1;
+
         if (imageManager.state != BCImageManagerStateLoading && imageManager.state != BCImageManagerStateReachedEnd) {
             [imageManager loadNextImages:^(NSArray *results, NSError *error) {
-                [self.collectionView reloadData];
+                if (results.count > 0) {
+                    [weakSelf.collectionView insertItemsAtIndexPaths:[self indexPathsForPageNumber:nextPage]];
+                }
             }];
         }
     }
@@ -147,7 +174,13 @@ static NSString * const kImageCellReuseIdentifier = @"BCImageCollectionViewCellI
 }
 
 - (NSUInteger)numberOfColumnsInCollectionView:(UICollectionView *)collectionView {
-    return 3;
+    return kNumberOfColumns;
+}
+
+#pragma mark - BCSearchHistoryViewControllerDelegate
+- (void)searchHistoryViewController:(BCSearchHistoryViewController *)viewController didSelectQuery:(NSString *)query {
+    self.searchBar.text = query;
+    [self search:query];
 }
 
 @end

@@ -46,7 +46,8 @@ static NSString * const kHistoryCellIdentifier = @"BCHistoryCell";
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kHistoryCellIdentifier];
     }
 
-    cell.textLabel.text = [BCSearchHistoryManager sharedManager].searches[indexPath.row];
+    BCSearchHistoryManager *searchHistoryManager = [BCSearchHistoryManager sharedManager];
+    cell.textLabel.text = searchHistoryManager.searches[searchHistoryManager.searches.count - indexPath.row - 1];
 
     return cell;
 }
@@ -55,9 +56,13 @@ static NSString * const kHistoryCellIdentifier = @"BCHistoryCell";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
     NSString *query = [BCSearchHistoryManager sharedManager].searches[indexPath.row];
-    NSLog(@"selected %@", query);
+
+    if ([self.delegate respondsToSelector:@selector(searchHistoryViewController:didSelectQuery:)]) {
+        [self.delegate searchHistoryViewController:self didSelectQuery:query];
+    }
 
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end
