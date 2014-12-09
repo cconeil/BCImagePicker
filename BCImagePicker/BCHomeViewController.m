@@ -39,7 +39,7 @@ static NSString * const kImageCellReuseIdentifier = @"BCImageCollectionViewCellI
     self.navigationItem.leftBarButtonItem = clearButton;
 
     // Setup the Search Bar
-    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0.0, 0.0, self.view.frame.size.width, 44.0)];
+    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0.0, 64.0, self.view.frame.size.width, 44.0)];
     self.searchBar.placeholder = NSLocalizedString(@"Search Google Images", nil);
     self.searchBar.delegate = self;
     [self.view addSubview:self.searchBar];
